@@ -8,6 +8,8 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+    job:
+      enabled: true
   sql:
     init:
       mode: always
@@ -15,3 +17,4 @@ spring:
 logging:
   level:
     org.springframework.jdbc: ERROR
+    org.springframework.batch: debug

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.batch.BatchDataSource;
 
 @SpringBootApplication
-@EnableBatchProcessing
 @BatchDataSource
 public class SpringBatchApplication {
 
