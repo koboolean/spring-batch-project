@@ -5,3 +5,13 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/postgres?charSet=UTF-8
+  batch:
+    jdbc:
+      initialize-schema: always
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.springframework.jdbc: ERROR
