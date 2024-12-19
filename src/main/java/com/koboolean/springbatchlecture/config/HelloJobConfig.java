@@ -1,5 +1,6 @@
 package com.koboolean.springbatchlecture.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
@@ -9,7 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.Map;
+
 @Configuration
+@RequiredArgsConstructor
 public class HelloJobConfig {
 
     @Bean
@@ -24,9 +28,11 @@ public class HelloJobConfig {
     public Step helloStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("helloStep1", jobRepository)
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println(" ============================");
-                    System.out.println(" >> Hello Spring Batch");
-                    System.out.println(" ============================");
+
+                    Map<String, Object> jobParameters = chunkContext.getStepContext().getJobParameters();
+
+                    System.out.println(jobParameters);
+
                     return RepeatStatus.FINISHED;
                 }, transactionManager).build();
     }
