@@ -1,5 +1,6 @@
 package com.koboolean.springbatchlecture.config;
 
+import com.koboolean.springbatchlecture.tasklet.CustomTasklet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -40,12 +41,7 @@ public class HelloJobConfig {
     @Bean
     public Step helloStep2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("helloStep2", jobRepository)
-                .tasklet((contribution, chunkContext) -> {
-                    System.out.println(" ============================");
-                    System.out.println(" >> Step2 has executed");
-                    System.out.println(" ============================");
-                    return RepeatStatus.FINISHED;
-                }, transactionManager).build();
+                .tasklet(new CustomTasklet(), transactionManager).build();
     }
 
 }
