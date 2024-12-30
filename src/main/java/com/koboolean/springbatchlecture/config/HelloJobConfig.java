@@ -6,6 +6,7 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +33,26 @@ public class HelloJobConfig {
 
                     Map<String, Object> jobParameters = chunkContext.getStepContext().getJobParameters();
 
-                    System.out.println(jobParameters);
+                    // Job Execution Context
+                    ExecutionContext jobExecutionContext = contribution.getStepExecution().getJobExecution().getExecutionContext();
+
+                    // Step Execution Context
+                    ExecutionContext stepExecutionContext = contribution.getStepExecution().getExecutionContext();
+
+
+                    String jobName = chunkContext.getStepContext().getStepExecution().getJobExecution().getJobInstance().getJobName();
+                    String stepName = chunkContext.getStepContext().getStepExecution().getStepName();
+
+                    if(jobExecutionContext.get("jobName") == null){
+                        jobExecutionContext.put("jobName", jobName);
+                    }
+
+                    if(stepExecutionContext.get("stepName") == null){
+                        stepExecutionContext.put("stepName", stepName);
+                    }
+
+                    System.out.println(jobExecutionContext.get("jobName"));
+                    System.out.println(stepExecutionContext.get("stepName"));
 
                     return RepeatStatus.FINISHED;
                 }, transactionManager).build();
