@@ -54,6 +54,8 @@ public class HelloJobConfig {
                         stepExecutionContext.put("stepName", stepName);
                     }
 
+                    Thread.sleep(3000);
+
                     System.out.println(jobExecutionContext.get("jobName"));
                     System.out.println(stepExecutionContext.get("stepName"));
 
