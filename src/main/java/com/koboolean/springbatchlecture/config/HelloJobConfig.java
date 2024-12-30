@@ -18,11 +18,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class HelloJobConfig {
 
+    private final JobExecutionListener jobRepositoryListener;
+
     @Bean
     public Job helloJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new JobBuilder("helloJob", jobRepository)
                 .start(helloStep(jobRepository, transactionManager)) // 처음 시작하는 Step
                 .next(helloStep2(jobRepository, transactionManager)) // 다음 시작하는 Step
+                .listener(jobRepositoryListener)
                 .build();
     }
 
