@@ -3,6 +3,7 @@ package com.koboolean.springbatchlecture.config;
 import com.koboolean.springbatchlecture.tasklet.CustomTasklet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
+import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
@@ -24,6 +25,8 @@ public class HelloJobConfig {
         return new JobBuilder("helloJob", jobRepository)
                 .start(helloStep(jobRepository, transactionManager)) // 처음 시작하는 Step
                 .next(helloStep2(jobRepository, transactionManager)) // 다음 시작하는 Step
+                //.validator(new CustomJobParametersValidator())
+                .validator(new DefaultJobParametersValidator(new String[]{"name","date"},new String[]{"count"}))
                 .build();
     }
 
@@ -43,28 +46,6 @@ public class HelloJobConfig {
     @Bean
     public Step helloStep2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("helloStep2", jobRepository)
-                .tasklet(new CustomTasklet(), transactionManager).build();
-    }
-
-
-    @Bean
-    public Flow helloFlow(JobRepository jobRepository, PlatformTransactionManager transactionManager, Flow flow) {
-        FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("helloFlow");
-
-        flowBuilder.start(helloStep3(jobRepository, transactionManager))
-                .next(helloStep4(jobRepository, transactionManager))
-                .end();
-
-        return flowBuilder.build();
-    }
-
-    private Step helloStep3(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("helloStep3", jobRepository)
-                .tasklet(new CustomTasklet(), transactionManager).build();
-    }
-
-    private Step helloStep4(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("helloStep4", jobRepository)
                 .tasklet(new CustomTasklet(), transactionManager).build();
     }
 
