@@ -1,15 +1,17 @@
 spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: true
+      name: ${job.name:NONE}
   application:
     name: spring-batch
   datasource:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/postgres?charSet=UTF-8
-  batch:
-    jdbc:
-      initialize-schema: always
-    job:
-      enabled: false
+
   sql:
     init:
       mode: always

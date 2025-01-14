@@ -3,6 +3,7 @@ package com.koboolean.springbatchlecture.config;
 import com.koboolean.springbatchlecture.tasklet.CustomTasklet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
+import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.Map;
+import java.util.concurrent.Flow;
 
 @Configuration
 @RequiredArgsConstructor
@@ -41,6 +43,28 @@ public class HelloJobConfig {
     @Bean
     public Step helloStep2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("helloStep2", jobRepository)
+                .tasklet(new CustomTasklet(), transactionManager).build();
+    }
+
+
+    @Bean
+    public Flow helloFlow(JobRepository jobRepository, PlatformTransactionManager transactionManager, Flow flow) {
+        FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("helloFlow");
+
+        flowBuilder.start(helloStep3(jobRepository, transactionManager))
+                .next(helloStep4(jobRepository, transactionManager))
+                .end();
+
+        return flowBuilder.build();
+    }
+
+    private Step helloStep3(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("helloStep3", jobRepository)
+                .tasklet(new CustomTasklet(), transactionManager).build();
+    }
+
+    private Step helloStep4(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("helloStep4", jobRepository)
                 .tasklet(new CustomTasklet(), transactionManager).build();
     }
 

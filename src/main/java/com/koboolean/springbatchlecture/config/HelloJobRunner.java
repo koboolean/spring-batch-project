@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Component
+/*@Component*/
 @RequiredArgsConstructor
 public class HelloJobRunner implements ApplicationRunner {
 
