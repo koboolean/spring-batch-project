@@ -26,7 +26,8 @@ public class HelloJobConfig {
                 .start(helloStep(jobRepository, transactionManager)) // 처음 시작하는 Step
                 .next(helloStep2(jobRepository, transactionManager)) // 다음 시작하는 Step
                 //.validator(new CustomJobParametersValidator())
-                .validator(new DefaultJobParametersValidator(new String[]{"name","date"},new String[]{"count"}))
+                //.validator(new DefaultJobParametersValidator(new String[]{"name","date"},new String[]{"count"}))
+                .preventRestart()
                 .build();
     }
 
