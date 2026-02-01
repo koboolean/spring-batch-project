@@ -7,7 +7,7 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
     ports:
-      - 5432:5432
+      - 5431:5432
     volumes:
       - ./volume/db:/var/lib/postgresql/data
       - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh

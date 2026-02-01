@@ -7,7 +7,7 @@ set -e
 
 # PostgreSQL의 기본 설정
 # psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB"
-psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -p 5432
+psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -p 5431
 
 #psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 #    BEGIN;

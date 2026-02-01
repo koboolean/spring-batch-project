@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config;
+package com.koboolean.springbatchlecture.config.hello;
 
 import com.koboolean.springbatchlecture.tasklet.CustomTasklet;
 import lombok.RequiredArgsConstructor;
