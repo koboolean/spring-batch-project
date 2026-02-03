@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.flowDetail;
+package com.koboolean.springbatchlecture.config.transition;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
