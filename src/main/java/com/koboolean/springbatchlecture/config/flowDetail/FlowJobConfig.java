@@ -1,9 +1,11 @@
-package com.koboolean.springbatchlecture.config.flow;
+package com.koboolean.springbatchlecture.config.flowDetail;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.builder.FlowJobBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.repository.JobRepository;
@@ -14,16 +16,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-//@Configuration
+@Configuration
 public class FlowJobConfig {
 
     @Bean
-    public Job flowJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new JobBuilder("flowJob", jobRepository)
-                .start(flowA(jobRepository, transactionManager)) // 처음 시작하는 Step
-                .next(step3(jobRepository, transactionManager))
-                .next(flowB(jobRepository, transactionManager))
-                .next(step6(jobRepository, transactionManager))
+    public Job flowJob2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new JobBuilder("flowJob2", jobRepository)
+                .start(step1(jobRepository, transactionManager))
+                    .on("FAILED")
+                    .to(step2(jobRepository, transactionManager))
+                    .on("FAILED")
+                    .stop()
+                .from(step1(jobRepository, transactionManager))
+                    .on("*")
+                    .to(step3(jobRepository, transactionManager))
+                    .next(step4(jobRepository, transactionManager))
+                    .on("SUCCESS")
+                    .stop()
+                .from(step2(jobRepository, transactionManager))
+                    .on("*")
+                    .to(step5(jobRepository, transactionManager))
                 .end()
                 .build();
     }
@@ -41,6 +53,7 @@ public class FlowJobConfig {
         return new StepBuilder("step1", jobRepository)
                 .tasklet(((contribution, chunkContext) -> {
                     System.out.println("Step 1 executed!");
+                    contribution.setExitStatus(ExitStatus.FAILED);
                     return RepeatStatus.FINISHED;
                 }), transactionManager).build();
     }
