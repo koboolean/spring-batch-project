@@ -1,10 +1,14 @@
-package com.koboolean.springbatchlecture.config.decider;
+package com.koboolean.springbatchlecture.config.flowJob;
 
+import com.koboolean.springbatchlecture.config.decider.OddDecider;
 import com.koboolean.springbatchlecture.config.exitStatus.PassCheckingListener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.builder.FlowJobBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -30,6 +34,19 @@ public class FlowJobConfig {
                 .end()
                 .build();
     }
+
+    @Bean
+    public Flow flow(){
+        FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("flow");
+
+        flowBuilder.start(step())
+                .on("SUCCESS")
+                .to(evenStep())
+                .end();
+
+        return flowBuilder.build();
+    }
+
 
     @Bean
     public JobExecutionDecider decider() {

@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.decider;
+package com.koboolean.springbatchlecture.config.flowJob;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
