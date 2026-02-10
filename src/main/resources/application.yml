@@ -4,7 +4,7 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/postgres?charSet=UTF-8
+    url: jdbc:postgresql://localhost:5431/postgres?charSet=UTF-8
   batch:
     jdbc:
       initialize-schema: always
@@ -12,7 +12,7 @@ spring:
       enabled: false
   sql:
     init:
-      mode: always
+      mode: never
 
 logging:
   level:
