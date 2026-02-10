@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.simpleFlow;
+package com.koboolean.springbatchlecture.config.flowApi;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Date;
 
-// @Component
+@Component
 public class FlowJobRunner implements ApplicationRunner {
 
     private final JobLauncher jobLauncher;
