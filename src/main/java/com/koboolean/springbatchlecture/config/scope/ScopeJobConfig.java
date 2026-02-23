@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
+// @Configuration
 public class ScopeJobConfig {
 
     private final JobRepository jobRepository;

@@ -14,7 +14,10 @@ spring:
     init:
       mode: never
 
+
 logging:
   level:
     org.springframework.jdbc: ERROR
-    org.springframework.batch: debug
+    org.springframework.batch: DEBUG
+    root: DEBUG
+
