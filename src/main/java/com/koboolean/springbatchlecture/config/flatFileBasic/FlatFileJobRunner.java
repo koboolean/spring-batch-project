@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.scope;
+package com.koboolean.springbatchlecture.config.flatFileBasic;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -9,17 +9,15 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-// @Component
-public class ScopeJobRunner implements ApplicationRunner {
+//@Component
+public class FlatFileJobRunner implements ApplicationRunner {
 
     private final JobLauncher jobLauncher;
     private final Job job;
 
-    public ScopeJobRunner(JobLauncher jobLauncher, @Qualifier("scopeJob") Job job){
+    public FlatFileJobRunner(JobLauncher jobLauncher, @Qualifier("flatFilesJob") Job job){
             this.jobLauncher = jobLauncher;
             this.job = job;
     }
@@ -29,8 +27,7 @@ public class ScopeJobRunner implements ApplicationRunner {
 
         // parameters를 정의한다.
         JobParameters jobParameters = new JobParametersBuilder()
-                .addString("message", "my message")
-                .addLocalDateTime("date", LocalDateTime.now())
+                .addLocalDateTime("local_date_time", LocalDateTime.now())
                 .toJobParameters();
 
         // Job을 실행한다.
