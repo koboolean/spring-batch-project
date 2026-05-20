@@ -18,13 +18,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
+// @Configuration
 public class FlatFilesWithDelimetedLineTokenizerConfiguration {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    @Bean
+    // @Bean
     public Job flatFilesJob() {
         return new JobBuilder("flatFilesJob", jobRepository)
                 .start(step1())
@@ -32,7 +32,7 @@ public class FlatFilesWithDelimetedLineTokenizerConfiguration {
                 .build();
     }
 
-    @Bean
+    // @Bean
     public Step step1() {
         return new StepBuilder("step1", jobRepository)
                 .chunk(5, transactionManager)
@@ -43,7 +43,7 @@ public class FlatFilesWithDelimetedLineTokenizerConfiguration {
                 .build();
     }
 
-    @Bean
+    // @Bean
     public Step step2() {
         return new StepBuilder("step2", jobRepository)
                 .tasklet((contribution, chunkContext) -> {
@@ -53,7 +53,7 @@ public class FlatFilesWithDelimetedLineTokenizerConfiguration {
                 .build();
     }
 
-    @Bean
+    // @Bean
     public ItemReader<Customer> itemReader(){
         return new FlatFileItemReaderBuilder<Customer>()
                 .name("flatFile")
