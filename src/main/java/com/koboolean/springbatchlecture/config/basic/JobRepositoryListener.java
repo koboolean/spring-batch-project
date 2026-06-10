@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config;
+package com.koboolean.springbatchlecture.config.basic;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
