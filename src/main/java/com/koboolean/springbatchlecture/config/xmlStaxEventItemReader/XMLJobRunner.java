@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.flatFileBasic;
+package com.koboolean.springbatchlecture.config.xmlStaxEventItemReader;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -9,15 +9,17 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-//@Component
-public class FlatFileJobRunner implements ApplicationRunner {
+@Component
+public class XMLJobRunner implements ApplicationRunner {
 
     private final JobLauncher jobLauncher;
     private final Job job;
 
-    public FlatFileJobRunner(JobLauncher jobLauncher, @Qualifier("flatFilesJob") Job job){
+    public XMLJobRunner(JobLauncher jobLauncher, @Qualifier("xmlBatchJob") Job job){
             this.jobLauncher = jobLauncher;
             this.job = job;
     }
