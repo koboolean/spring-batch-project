@@ -16,20 +16,20 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class JsonItemReaderConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    @Bean
+//    @Bean
     public Job xmlBatchJob() {
         return new JobBuilder("jsonBatchJob", jobRepository)
                 .start(step1())
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step step1() {
         return new StepBuilder("step1", jobRepository)
                 .<Customer, Customer>chunk(5, transactionManager)
@@ -46,7 +46,7 @@ public class JsonItemReaderConfig {
         };
     }
 
-    @Bean
+//    @Bean
     public ItemReader<? extends Customer> customerItemReader() {
         return new JsonItemReaderBuilder<Customer>()
                 .name("jsonReader")

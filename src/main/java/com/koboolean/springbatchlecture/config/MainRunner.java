@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.itemReader.jsonItemReader;
+package com.koboolean.springbatchlecture.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class JsonItemReaderRunner implements ApplicationRunner {
+public class MainRunner implements ApplicationRunner {
 
     private final JobLauncher jobLauncher;
     private final Job job;
 
-    public JsonItemReaderRunner(JobLauncher jobLauncher, @Qualifier("xmlBatchJob") Job job){
+    public MainRunner(JobLauncher jobLauncher, @Qualifier("jdbcBatchJob") Job job){
             this.jobLauncher = jobLauncher;
             this.job = job;
     }
