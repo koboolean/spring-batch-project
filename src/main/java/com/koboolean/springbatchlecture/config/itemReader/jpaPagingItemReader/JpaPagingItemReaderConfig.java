@@ -20,21 +20,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class JpaPagingItemReaderConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final EntityManagerFactory entityManagerFactory;
 
-    @Bean
+//    @Bean
     public Job jpaBatchJob() {
         return new JobBuilder("jpaBatchJob", jobRepository)
                 .start(jpaBatchStep1())
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jpaBatchStep1() {
         return new StepBuilder("jpaBatchStep1", jobRepository)
                 .<com.koboolean.springbatchlecture.config.itemReader.jpaPagingItemReader.Customer, com.koboolean.springbatchlecture.config.itemReader.jpaPagingItemReader.Customer>chunk(5, transactionManager)
@@ -43,7 +43,7 @@ public class JpaPagingItemReaderConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public ItemReader<com.koboolean.springbatchlecture.config.itemReader.jpaPagingItemReader.Customer> customerItemReader() {
         Map<String, Object> param = new HashMap<>();
         param.put("firstname", "%");
