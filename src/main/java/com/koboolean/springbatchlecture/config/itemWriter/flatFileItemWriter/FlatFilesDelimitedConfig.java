@@ -41,7 +41,7 @@ public class FlatFilesDelimitedConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public ItemReader<Customer> customItemReader() {
         List<Customer> customers = Arrays.asList(
                 new Customer(1L, "TEST1", 10),

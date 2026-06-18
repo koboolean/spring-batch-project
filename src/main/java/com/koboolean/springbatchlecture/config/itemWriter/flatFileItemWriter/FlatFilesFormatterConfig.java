@@ -25,14 +25,14 @@ public class FlatFilesFormatterConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    @Bean
+//    @Bean
     public Job formatterJob() {
         return new JobBuilder("formatterJob", jobRepository)
                 .start(formatterStep1())
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step formatterStep1() {
         return new StepBuilder("formatterStep1", jobRepository)
                 .<Customer, Customer>chunk(5, transactionManager)
@@ -41,7 +41,7 @@ public class FlatFilesFormatterConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public ItemReader<Customer> customItemReader() {
         List<Customer> customers = Arrays.asList(
                 new Customer(1L, "TEST1", 10),
@@ -51,7 +51,7 @@ public class FlatFilesFormatterConfig {
         return new ListItemReader<>(customers);
     }
 
-    @Bean
+//    @Bean
     public ItemWriter<Customer> customItemWriter() {
         return new FlatFileItemWriterBuilder<Customer>()
                 .name("flatFileWriter")
