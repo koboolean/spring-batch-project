@@ -17,7 +17,7 @@ public class MainRunner implements ApplicationRunner {
     private final JobLauncher jobLauncher;
     private final Job job;
 
-    public MainRunner(JobLauncher jobLauncher, @Qualifier("jsonFileItemWriterJob") Job job){
+    public MainRunner(JobLauncher jobLauncher, @Qualifier("jpaItemWriterJob") Job job){
             this.jobLauncher = jobLauncher;
             this.job = job;
     }

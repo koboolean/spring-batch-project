@@ -1,11 +1,12 @@
-package com.koboolean.springbatchlecture.config.itemReader.jpaPagingItemReader;
+package com.koboolean.springbatchlecture.config.itemWriter.databaseItemWriter.jpaItemWriter;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-//@Entity
+@Entity
 public class Customer {
 
     @Id
@@ -16,3 +17,4 @@ public class Customer {
     private String birthdate;
 
 }
+

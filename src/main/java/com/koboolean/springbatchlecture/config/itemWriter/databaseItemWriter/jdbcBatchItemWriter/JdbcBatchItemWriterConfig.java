@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.itemWriter.jsonFileItemWriter;
+package com.koboolean.springbatchlecture.config.itemWriter.databaseItemWriter.jdbcBatchItemWriter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -10,14 +10,16 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.PagingQueryProvider;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
-import org.springframework.batch.item.json.JacksonJsonObjectMarshaller;
-import org.springframework.batch.item.json.builder.JsonFileItemWriterBuilder;
+import org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -26,22 +28,22 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 //@Configuration
-public class JsonFileItemWriterConfig {
+public class JdbcBatchItemWriterConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final DataSource dataSource;
 
 //    @Bean
-    public Job jsonFileItemWriterJob() throws Exception {
-        return new JobBuilder("jsonFileItemWriterJob", jobRepository)
-                .start(JsonFileItemWriterStep01())
+    public Job jdbcBatchJob() throws Exception {
+        return new JobBuilder("jdbcBatchJob", jobRepository)
+                .start(delimitedStep1())
                 .build();
     }
 
-    @Bean
-    public Step JsonFileItemWriterStep01() throws Exception {
-        return new StepBuilder("JsonFileItemWriterStep01", jobRepository)
+//    @Bean
+    public Step delimitedStep1() throws Exception {
+        return new StepBuilder("delimitedStep1", jobRepository)
                 .<Customer, Customer>chunk(5, transactionManager)
                 .reader(customerItemReader())
                 .writer(customItemWriter())
@@ -52,7 +54,7 @@ public class JsonFileItemWriterConfig {
     public ItemReader<Customer> customerItemReader() throws Exception {
         int chunkSize = 5;
 
-        Map<String, Object> param = new HashMap<>();
+        Map<String,Object> param = new HashMap<>();
         param.put("firstname", "%");
 
         return new JdbcPagingItemReaderBuilder<Customer>()
@@ -83,10 +85,10 @@ public class JsonFileItemWriterConfig {
 
 //    @Bean
     public ItemWriter<Customer> customItemWriter() {
-        return new JsonFileItemWriterBuilder<Customer>()
-                .name("jsonFileItemWriter")
-                .jsonObjectMarshaller(new JacksonJsonObjectMarshaller<>())
-                .resource(new FileSystemResource("/Users/johyeonjun/MainProject/backend/spring-batch-project/src/main/resources/custom-writer.json"))
+        return new JdbcBatchItemWriterBuilder<Customer>()
+                .dataSource(dataSource)
+                .sql("insert into customer2(first_name, last_name, birthdate) values (:firstName, :lastName, :birthdate)")
+                .beanMapped()
                 .build();
     }
 }
