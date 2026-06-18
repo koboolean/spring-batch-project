@@ -30,21 +30,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class JpaItemWriterConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final EntityManagerFactory entityManagerFactory;
 
-    @Bean
+//    @Bean
     public Job jpaItemWriterJob() throws Exception {
         return new JobBuilder("jpaItemWriterJob", jobRepository)
                 .start(jpaItemWriterStep())
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jpaItemWriterStep() throws Exception {
         return new StepBuilder("jpaItemWriterStep", jobRepository)
                 .<Customer, Customer2>chunk(5, transactionManager)
@@ -58,7 +58,7 @@ public class JpaItemWriterConfig {
         return new CustomItemProcessor();
     }
 
-    @Bean
+//    @Bean
     public ItemReader<Customer> customerItemReader() throws Exception {
         Map<String, Object> param = new HashMap<>();
         param.put("firstname", "%");
@@ -73,7 +73,7 @@ public class JpaItemWriterConfig {
     }
 
 
-    @Bean
+//    @Bean
     public ItemWriter<Customer2> customItemWriter() {
         return new JpaItemWriterBuilder<Customer2>()
                 .entityManagerFactory(entityManagerFactory)
