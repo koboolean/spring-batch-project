@@ -14,20 +14,20 @@ import org.springframework.lang.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class ItemWriterAdaptorConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    @Bean
+//    @Bean
     public Job itemWriterAdaptorJob() {
         return new JobBuilder("itemWriterAdaptorJob", jobRepository)
                 .start(itemWriterAdaptorStep())
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step itemWriterAdaptorStep() {
         return new StepBuilder("itemWriterAdaptorStep", jobRepository)
                 .<String, String>chunk(5, transactionManager)
@@ -47,7 +47,7 @@ public class ItemWriterAdaptorConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public ItemWriter<String> customItemWriter() {
         ItemWriterAdapter<String> adapter = new ItemWriterAdapter<>();
 
