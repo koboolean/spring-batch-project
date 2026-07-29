@@ -1,5 +1,7 @@
 package com.koboolean.springbatchlecture.config.exception.skip;
 
+import com.koboolean.springbatchlecture.config.exception.NoSkippableException;
+import com.koboolean.springbatchlecture.config.exception.SkippableException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -8,7 +10,6 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.core.step.skip.AlwaysSkipItemSkipPolicy;
 import org.springframework.batch.core.step.skip.LimitCheckingItemSkipPolicy;
 import org.springframework.batch.core.step.skip.NeverSkipItemSkipPolicy;
 import org.springframework.batch.core.step.skip.SkipPolicy;
