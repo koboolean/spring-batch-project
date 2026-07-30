@@ -1,4 +1,4 @@
-package com.koboolean.springbatchlecture.config.multiThred.asyncItem;
+package com.koboolean.springbatchlecture.config.multi.asyncItem;
 
 
 import org.springframework.jdbc.core.RowMapper;
